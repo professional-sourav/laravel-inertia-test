@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -16,3 +17,4 @@ Route::get('/', function () {
 
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 
+Route::resource('/tasks', TaskController::class);
