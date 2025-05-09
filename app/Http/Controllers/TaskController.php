@@ -5,15 +5,18 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Task;
+use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tasks = Task::all();
+        $tasks = Task::query()->latest()
+            ->paginate(10)
+            ->withQueryString();
 
         return inertia('Tasks/Index', ['tasks' => $tasks]);
     }
