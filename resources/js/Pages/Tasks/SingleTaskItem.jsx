@@ -1,4 +1,22 @@
+import {useForm} from "@inertiajs/react";
+
 const SingleTaskItem = ({ task }) => {
+
+    const { data, delete: destroy, processing, errors } = useForm()
+
+    const deleteTask = (e) => {
+        e.preventDefault()
+        if (confirm('Are you sure you want to delete this task?')) {
+            destroy(`/tasks/${task.id}`, {
+                onSuccess: () => {
+                    // Handle success, e.g., redirect or show a success message
+                },
+                onError: () => {
+                    // Handle error, e.g., show an error message
+                }
+            })
+        }
+    }
 
     return (
         <div className="flex flex-col gap-2 p-4 border-bottom border-gray-300 rounded-lg shadow-sm mb-4">
@@ -9,7 +27,10 @@ const SingleTaskItem = ({ task }) => {
             <p className="text-gray-700">{task.description}</p>
             <div className="flex items-center gap-2 mt-2 justify-end">
                 <button className="px-4 py-2 bg-blue-500 text-white rounded">Edit</button>
-                <button className="px-4 py-2 bg-red-500 text-white rounded">Delete</button>
+
+                <form onSubmit={deleteTask}>
+                    <button type="submit" className="px-4 py-2 bg-red-500 text-white rounded">Delete</button>
+                </form>
             </div>
         </div>
     )

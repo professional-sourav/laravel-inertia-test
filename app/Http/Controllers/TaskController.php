@@ -26,7 +26,7 @@ class TaskController extends Controller
      */
     public function create()
     {
-        //
+        return inertia('Tasks/Create');
     }
 
     /**
@@ -34,7 +34,16 @@ class TaskController extends Controller
      */
     public function store(StoreTaskRequest $request)
     {
-        //
+        $fields = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string'
+        ]);
+
+        $task = Task::create($fields);
+
+        return redirect()
+            ->route('tasks.index')
+            ->with('success', 'Task created successfully.');
     }
 
     /**
@@ -66,6 +75,10 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        //
+        $task->delete();
+
+        return redirect()
+            ->route('tasks.index')
+            ->with('success', 'Task deleted successfully.');
     }
 }
