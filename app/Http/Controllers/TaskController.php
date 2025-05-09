@@ -59,7 +59,9 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        //
+        return inertia('Tasks/Edit', [
+            'task' => $task,
+        ]);
     }
 
     /**
@@ -67,7 +69,17 @@ class TaskController extends Controller
      */
     public function update(UpdateTaskRequest $request, Task $task)
     {
-        //
+        $fields = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            // 'status' => 'required|in:pending,completed',
+        ]);
+
+        $task->update($fields);
+
+        return redirect()
+            ->route('tasks.index')
+            ->with('success', 'Task updated successfully.');
     }
 
     /**

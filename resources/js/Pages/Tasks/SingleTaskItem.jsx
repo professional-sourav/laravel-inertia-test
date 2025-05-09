@@ -1,4 +1,4 @@
-import {useForm} from "@inertiajs/react";
+import {Link, useForm} from "@inertiajs/react";
 
 const SingleTaskItem = ({ task }) => {
 
@@ -26,8 +26,7 @@ const SingleTaskItem = ({ task }) => {
             </div>
             <p className="text-gray-700">{task.description}</p>
             <div className="flex items-center gap-2 mt-2 justify-end">
-                <button className="px-4 py-2 bg-blue-500 text-white rounded">Edit</button>
-
+                <Link className="px-4 py-2 bg-blue-500 text-white rounded" href={`/tasks/${task.id}/edit`}>Edit</Link>
                 <form onSubmit={deleteTask}>
                     <button type="submit" className="px-4 py-2 bg-red-500 text-white rounded">Delete</button>
                 </form>
