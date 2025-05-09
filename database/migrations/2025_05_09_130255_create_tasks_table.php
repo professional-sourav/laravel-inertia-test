@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('posts', function (Blueprint $table) {
+        Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->string('title', 150);
-            $table->string('slug', 175)->unique();
-            $table->text('content')->nullable();
-            $table->string('author', 100)->nullable();
-            $table->string('status', 50)->default('draft'); // draft, published, archived
+            $table->string('title');
+            $table->text('description')->nullable();
+            $table->enum('status', ['pending', 'in_progress', 'completed'])->default('pending');
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('posts');
+        Schema::dropIfExists('tasks');
     }
 };
